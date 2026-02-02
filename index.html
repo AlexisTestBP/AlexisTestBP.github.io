@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Banco Pichincha | Registro QR</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    :root{
+      --bg: #0B1220;
+      --card: rgba(255,255,255,0.06);
+      --card2: rgba(255,255,255,0.10);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.68);
+      --brand: #FFD200;  /* amarillo pichincha */
+      --ok: rgba(34,197,94,1);
+      --err: rgba(239,68,68,1);
+      --shadow: 0 18px 60px rgba(0,0,0,0.45);
+      --radius: 18px;
+      --maxw: 520px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 10% 10%, rgba(255,210,0,0.18), transparent 55%),
+        radial-gradient(900px 500px at 90% 20%, rgba(255,210,0,0.10), transparent 60%),
+        radial-gradient(900px 700px at 50% 90%, rgba(59,130,246,0.12), transparent 60%),
+        linear-gradient(180deg, #070A12, var(--bg));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 20px;
+    }
+
+    .wrap{
+      width: 100%;
+      max-width: var(--maxw);
+    }
+
+    .top{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:12px;
+    }
+
+    .logo{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      background: linear-gradient(135deg, rgba(255,210,0,1), rgba(255,210,0,0.65));
+      box-shadow: 0 10px 30px rgba(255,210,0,0.18);
+      display:grid;
+      place-items:center;
+      color:#111827;
+      font-weight:800;
+      letter-spacing:0.5px;
+    }
+
+    .brand-title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .brand-title b{
+      font-size: 14px;
+      letter-spacing: 0.4px;
+    }
+    .brand-title span{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 18px 16px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .accent{
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:6px;
+      background: linear-gradient(90deg, rgba(255,210,0,1), rgba(255,210,0,0.5));
+    }
+
+    .title{
+      margin: 10px 0 6px;
+      font-size: 18px;
+      letter-spacing: 0.2px;
+    }
+
+    .desc{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .status{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      margin-bottom: 12px;
+    }
+
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      margin-top: 4px;
+      background: var(--brand);
+      box-shadow: 0 0 0 4px rgba(255,210,0,0.15);
+      animation: pulse 1.1s infinite;
+    }
+
+    @keyframes pulse{
+      0%{ transform: scale(1); opacity: 1; }
+      70%{ transform: scale(1.35); opacity: 0.65; }
+      100%{ transform: scale(1); opacity: 1; }
+    }
+
+    .status h3{
+      margin:0;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .status p{
+      margin: 3px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .meta{
+      display:grid;
+      gap:8px;
+      margin-top: 10px;
+    }
+
+    .pill{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .pill b{
+      color: rgba(255,255,255,0.88);
+      font-weight: 700;
+    }
+
+    .footer{
+      margin-top: 10px;
+      text-align:center;
+      color: rgba(255,255,255,0.55);
+      font-size: 11px;
+    }
+
+    .ok .dot{ background: var(--ok); box-shadow: 0 0 0 4px rgba(34,197,94,0.18); animation:none; }
+    .err .dot{ background: var(--err); box-shadow: 0 0 0 4px rgba(239,68,68,0.18); animation:none; }
+
+    .small{
+      font-size: 11px;
+      color: rgba(255,255,255,0.55);
+      margin: 10px 0 0;
+      line-height: 1.4;
+    }
+
+    .hidden{ display:none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="logo">BP</div>
+      <div class="brand-title">
+        <b>Banco Pichincha</b>
+        <span>Registro automático por QR</span>
+      </div>
+    </div>
+
+    <div class="card" role="status" aria-live="polite">
+      <div class="accent"></div>
+
+      <h1 class="title" id="title">Registrando escaneo…</h1>
+      <p class="desc" id="desc">
+        Por favor espera unos segundos. Este proceso se ejecuta automáticamente.
+      </p>
+
+      <div class="status" id="statusBox">
+        <div class="dot" aria-hidden="true"></div>
+        <div>
+          <h3 id="statusTitle">Procesando</h3>
+          <p id="statusText">Enviando la información al sistema.</p>
+        </div>
+      </div>
+
+      <div class="meta">
+        <div class="pill">
+          <span>Ubicación</span>
+          <b id="locLabel">DESCONOCIDO</b>
+        </div>
+        <div class="pill">
+          <span>Fecha/Hora</span>
+          <b id="timeLabel">—</b>
+        </div>
+      </div>
+
+      <p class="small" id="hint">
+        Si estás usando un QR, asegúrate de que la URL incluya <b>?loc=</b>, por ejemplo:
+        <br />
+        <span style="opacity:.85">…/index.html?loc=RECEPCION</span>
+      </p>
+
+      <div class="footer">© Banco Pichincha — Registro QR</div>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================================
+    // 1) PEGA AQUÍ TU URL DEL FLOW (HTTP trigger)
+    // ==========================================================
+    const FLOW_URL = "https://defaultf5b0d68214974db09019660035554e.72.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/58cb8760f3a441f4bfb1ada87e4bbac9/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=FjK6F5kKzWu8R8CBjHVMjnJp57WcCrwZ0plJYp2qti0";
+
+    // ==========================================================
+    // 2) Lee parámetros ?loc= y opcional ?id=
+    //    Ej: index.html?loc=RECEPCION&id=QR-001
+    // ==========================================================
+    const params = new URLSearchParams(window.location.search);
+    const loc = (params.get("loc") || "DESCONOCIDO").trim();
+    const qrId = (params.get("id") || "").trim();
+
+    // UI
+    const locLabel = document.getElementById("locLabel");
+    const timeLabel = document.getElementById("timeLabel");
+    const title = document.getElementById("title");
+    const desc = document.getElementById("desc");
+    const statusBox = document.getElementById("statusBox");
+    const statusTitle = document.getElementById("statusTitle");
+    const statusText = document.getElementById("statusText");
+    const hint = document.getElementById("hint");
+
+    locLabel.textContent = loc;
+    const now = new Date();
+    timeLabel.textContent = now.toLocaleString();
+
+    // Si viene loc, oculta hint
+    if (loc && loc !== "DESCONOCIDO") hint.classList.add("hidden");
+
+    // ==========================================================
+    // 3) Payload: lo que llega al Flow
+    // ==========================================================
+    const payload = {
+      locationId: loc,
+      qrId: qrId || null,
+      ts: now.toISOString(),
+      userAgent: navigator.userAgent,
+      language: navigator.language || null,
+      referrer: document.referrer || null
+    };
+
+    // ==========================================================
+    // 4) (Opcional) Intentar geolocalización
+    //    OJO: el navegador puede pedir permiso. Si no quieres eso,
+    //    desactívalo (pon ENABLE_GEO=false)
+    // ==========================================================
+    const ENABLE_GEO = false;
+
+    function sendToFlow(finalPayload){
+      if (!FLOW_URL || FLOW_URL.includes("PEGA_AQUI")) {
+        // No configurado
+        statusBox.classList.add("err");
+        title.textContent = "Falta configurar el enlace del flujo";
+        desc.textContent = "Pega la URL real del Flow en la variable FLOW_URL del index.html.";
+        statusTitle.textContent = "Configuración pendiente";
+        statusText.textContent = "No se envió información.";
+        return;
+      }
+
+      // Enviar POST al Flow
+      fetch(FLOW_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(finalPayload),
+        mode: "no-cors" // evita bloqueos típicos por CORS
+      })
+      .then(() => {
+        statusBox.classList.add("ok");
+        title.textContent = "Listo ✅";
+        desc.textContent = "El escaneo fue registrado correctamente.";
+        statusTitle.textContent = "Registro completado";
+        statusText.textContent = "Puedes cerrar esta ventana.";
+      })
+      .catch(() => {
+        statusBox.classList.add("err");
+        title.textContent = "No se pudo registrar";
+        desc.textContent = "Hubo un inconveniente al enviar la información.";
+        statusTitle.textContent = "Error de envío";
+        statusText.textContent = "Intenta escanear nuevamente.";
+      });
+    }
+
+    if (ENABLE_GEO && "geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          payload.geo = {
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude,
+            acc: pos.coords.accuracy
+          };
+          sendToFlow(payload);
+        },
+        () => {
+          // Sin permiso o error: enviar igual
+          sendToFlow(payload);
+        },
+        { enableHighAccuracy: false, timeout: 4000, maximumAge: 0 }
+      );
+    } else {
+      sendToFlow(payload);
+    }
+  </script>
+</body>
+</html>
+
